@@ -13,6 +13,8 @@ export class MediaPipeAdapter {
 
   _element;
 
+  stabilizePoints = true;
+
   static async loadLibraryFiles() {
     const model = faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh;
     detector = await faceLandmarksDetection.createDetector(model, detectorConfig);
@@ -44,7 +46,7 @@ export class MediaPipeAdapter {
         return;
       }
 
-      this._face = this._stabilizer.apply(faces[0]?.keypoints, deltaTime * 1000);
+      this._face = this.stabilizePoints ? this._stabilizer.apply(faces[0].keypoints, deltaTime * 1000) : faces[0].keypoints;
     }
   }
 

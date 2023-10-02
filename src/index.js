@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { EffectsRenderer } from './effects_renderer';
 import { createCamera } from './input/webcam';
 import { MediaPipeAdapter } from './media_pipe/adapter';
+import { DebugGUI } from './debug_gui';
 
 
 const canvas = document.querySelector('canvas.webgl');
@@ -22,6 +23,8 @@ const init = async () => {
       imageSize: MediaPipeAdapter.baseReferenceImageSize
     }
   });
+
+  const gui = new DebugGUI({ adapter: mediaPipeAdapter });
 
   tick();
 }
