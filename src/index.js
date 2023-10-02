@@ -24,7 +24,7 @@ const init = async () => {
     }
   });
 
-  const gui = new DebugGUI({ adapter: mediaPipeAdapter });
+  const gui = new DebugGUI({ adapter: mediaPipeAdapter, effectsRenderer });
 
   tick();
 }

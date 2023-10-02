@@ -63,4 +63,15 @@ export class FaceMesh extends Group {
   update(face) {
     this._faceGeometry?.update(face);
   }
+
+  set wireframe(value) {
+    this._baseMesh.material.wireframe = value;
+    if (this._multiMaterialMesh) {
+      this._multiMaterialMesh.material.wireframe = value;
+    }
+  }
+
+  get wireframe() {
+    return this._baseMesh.material.wireframe;
+  }
 }

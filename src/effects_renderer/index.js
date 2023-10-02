@@ -98,4 +98,13 @@ export class EffectsRenderer {
     }
     this._renderer.render(this._scene, this._camera);
   }
+
+  set wireframe(value) {
+    this._faceMeshesGroup.children.forEach(faceMesh => faceMesh.wireframe = value);
+  }
+
+  get wireframe() {
+    const faceMeshes = this._faceMeshesGroup.children;
+    return !faceMeshes.length ? false : faceMeshes[0].wireframe;
+  }
 }
