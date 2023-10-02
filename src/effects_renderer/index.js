@@ -11,6 +11,8 @@ export class EffectsRenderer {
   _source;
   _baseReferenceData;
 
+  _fullFaceDebugContainer;
+
   constructor({ canvas }) {
     this._renderer = new THREE.WebGLRenderer({ canvas: canvas });
     this._renderer.setPixelRatio(window.devicePixelRatio);
@@ -36,6 +38,9 @@ export class EffectsRenderer {
     this._scene = new THREE.Scene();
     this._faceMeshesGroup = new THREE.Group();
     this._camera = new THREE.OrthographicCamera(-width * 0.5, width * 0.5, height * 0.5, -height * 0.5, -1000, 1000);
+
+    this._fullFaceDebugContainer = new THREE.Group();
+    this._scene.add(this._fullFaceDebugContainer);
   }
 
   _setupSceneBackground(element) {
@@ -73,7 +78,7 @@ export class EffectsRenderer {
       color: 0xff0000
     });
     face.material = testMaterial;
-    
+
     this._faceMeshesGroup.add(face);
   }
 
@@ -92,7 +97,11 @@ export class EffectsRenderer {
   render(face) {
     if(face) {
       this._activateFaces();
-      this._faceMeshesGroup.children.forEach(faceMesh => faceMesh.update(face));
+      [
+        ...this._faceMeshesGroup.children,
+        ...this._fullFaceDebugContainer.children
+      ].forEach(faceMesh => faceMesh.update(face));
+
     } else {
       this._deactivateFaces();
     }
@@ -106,5 +115,37 @@ export class EffectsRenderer {
   get wireframe() {
     const faceMeshes = this._faceMeshesGroup.children;
     return !faceMeshes.length ? false : faceMeshes[0].wireframe;
+  }
+
+  _createDebugFullFace() {
+    const debugFace = new FaceMesh({
+      source: this._source,
+      baseReferenceData: this._baseReferenceData,
+      faces: FACES,
+      name: 'debug_face',
+      zIndex: 80,
+    });
+    const material = new THREE.MeshBasicMaterial({
+      // transparent: true,
+      color: 0xffffff,
+      wireframe: true
+    });
+    debugFace.material = material;
+
+    this._fullFaceDebugContainer.add(debugFace);
+  }
+
+  set fullFaceDebugMesh(value) {
+    if(!value) {
+      this._fullFaceDebugContainer.clear();
+      return;
+    }
+    if(!this._fullFaceDebugContainer.children.length) {
+      this._createDebugFullFace();
+    }
+  }
+
+  get fullFaceDebugMesh() {
+    return !!this._fullFaceDebugContainer.children.length;
   }
 }

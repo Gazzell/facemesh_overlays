@@ -18,5 +18,6 @@ export class DebugGUI {
   _addGeneral() {
     this._gui.add(this._adapter, 'stabilizePoints').name('Stabilize mesh');
     this._gui.add(this._effectsRenderer, 'wireframe').name('Wireframe');
+    this._gui.add(this._effectsRenderer, 'fullFaceDebugMesh').name('Full face debug mesh');
   }
 }
