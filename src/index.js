@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { EffectsRenderer } from './effects_renderer';
 import { createCamera } from './input/webcam';
-import { MediaPipeAdapter } from './MediaPipe/adapter';
+import { MediaPipeAdapter } from './media_pipe/adapter';
 
 
 const canvas = document.querySelector('canvas.webgl');

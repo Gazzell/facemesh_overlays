@@ -68,6 +68,5 @@ export class MediaPipeAdapter {
   static dispose() {
     detector?.dispose();
     detector = null;
-    detectorInputMode = null;
   }
 }

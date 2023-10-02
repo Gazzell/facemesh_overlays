@@ -4,11 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "test": "jest",
+    "test": "node --experimental-vm-modules ./node_modules/.bin/jest",
     "dev": "vite",
     "build": "vite build"
   },
   "devDependencies": {
+    "jest": "^29.7.0",
     "vite": "^4.0.4",
     "vite-plugin-static-copy": "^0.17.0"
   },
